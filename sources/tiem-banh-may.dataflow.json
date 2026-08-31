@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "diagram_type": "dataflow",
+  "meta": {
+    "title": "Dòng Dữ Liệu Đơn Bánh",
+    "quality_profile": "showcase",
+    "viewBox": [1000, 560],
+    "views": [
+      {
+        "id": "orderData",
+        "label": "Dữ liệu đơn hàng",
+        "focus": ["customer", "web", "api", "database"],
+        "note": "Theo profile, địa chỉ và chi tiết đơn tới nơi lưu."
+      },
+      {
+        "id": "externalSharing",
+        "label": "Chia sẻ ra ngoài",
+        "focus": ["api", "payment", "delivery"],
+        "note": "Tách dữ liệu thanh toán và dữ liệu giao hàng."
+      },
+      {
+        "id": "leastData",
+        "label": "Dữ liệu tối thiểu cho bếp",
+        "focus": ["api", "queue", "kitchen"],
+        "note": "Bếp chỉ nhận ticket cần thiết để làm bánh."
+      }
+    ]
+  },
+  "stages": [
+    { "label": "Input" },
+    { "label": "Xử lý" },
+    { "label": "Lưu / chuyển" },
+    { "label": "Sử dụng" }
+  ],
+  "nodes": [
+    { "id": "customer", "type": "external", "label": "Khách hàng", "sublabel": "profile + địa chỉ", "stage": 0, "row": 0 },
+    { "id": "web", "type": "frontend", "label": "Web App", "sublabel": "order form", "stage": 0, "row": 1 },
+    { "id": "api", "type": "backend", "label": "Order API", "sublabel": "tách theo mục đích", "stage": 1, "row": 1 },
+    { "id": "payment", "type": "external", "label": "Payment Provider", "sublabel": "trả payment token", "stage": 2, "row": 0 },
+    { "id": "database", "type": "database", "label": "Order Database", "sublabel": "order + delivery data", "stage": 2, "row": 1 },
+    { "id": "queue", "type": "messagebus", "label": "Kitchen Queue", "sublabel": "kitchen ticket", "stage": 2, "row": 2 },
+    { "id": "delivery", "type": "external", "label": "Delivery Partner", "sublabel": "tên + số + địa chỉ", "stage": 3, "row": 1 },
+    { "id": "kitchen", "type": "backend", "label": "Kitchen Display", "sublabel": "order_id + bánh + hạn", "stage": 3, "row": 2 }
+  ],
+  "flows": [
+    { "id": "customerProfile", "from": "customer", "to": "web", "label": "profile + địa chỉ", "classification": "authored personal data", "variant": "security", "labelAt": [208, 200] },
+    { "id": "orderPayload", "from": "web", "to": "api", "label": "order payload", "classification": "customer + order", "variant": "emphasis" },
+    { "id": "paymentRequest", "from": "api", "to": "payment", "label": "payment details", "classification": "payment", "variant": "security", "route": "top-channel", "channelY": 86, "labelAt": [420, 72] },
+    { "id": "paymentToken", "from": "payment", "to": "api", "label": "payment token", "classification": "token", "variant": "default", "route": "top-channel", "channelY": 112, "labelAt": [420, 112] },
+    { "id": "storedOrder", "from": "api", "to": "database", "label": "order + delivery data", "classification": "authored personal data", "variant": "emphasis", "labelAt": [470, 220] },
+    { "id": "kitchenTicket", "from": "api", "to": "queue", "label": "kitchen ticket", "classification": "minimal fulfillment", "variant": "dashed", "labelAt": [420, 330] },
+    { "id": "deliveryData", "from": "database", "to": "delivery", "label": "recipient + address", "classification": "external sharing", "variant": "security" },
+    { "id": "ticketConsume", "from": "queue", "to": "kitchen", "label": "kitchen ticket", "classification": "order_id + cake + deadline", "variant": "dashed", "labelAt": [635, 428] }
+  ]
+}
