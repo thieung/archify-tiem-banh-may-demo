@@ -1,0 +1,74 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Tiệm Bánh Mây — Xử Lý Đơn Bánh",
+    "quality_profile": "showcase",
+    "views": [
+      {
+        "id": "happyPath",
+        "label": "Đơn thành công",
+        "focus": ["submitOrder", "checkPayment", "checkStock", "confirmOrder", "makeCake", "handoff"],
+        "note": "Theo đơn hàng từ khách tới khi bàn giao."
+      },
+      {
+        "id": "recoveryPath",
+        "label": "Thiếu nguyên liệu",
+        "focus": ["checkStock", "offerChoice", "changeCake", "refund"],
+        "note": "Khách đổi mẫu bánh hoặc nhận hoàn tiền."
+      }
+    ]
+  },
+  "lanes": [
+    { "id": "customer", "label": "Khách hàng" },
+    { "id": "system", "label": "Website + hệ thống" },
+    { "id": "shop", "label": "Nhân viên + bếp" },
+    { "id": "exceptions", "label": "Ngoại lệ", "variant": "exception" }
+  ],
+  "phases": [
+    { "id": "intake", "label": "Nhận đơn", "fromCol": 0, "toCol": 1 },
+    { "id": "decision", "label": "Kiểm tra", "fromCol": 2, "toCol": 3, "variant": "emphasis" },
+    { "id": "fulfillment", "label": "Thực hiện", "fromCol": 4, "toCol": 5, "variant": "dashed" }
+  ],
+  "mainPath": ["submitOrder", "checkPayment", "checkStock", "confirmOrder", "makeCake", "handoff"],
+  "nodes": [
+    { "id": "submitOrder", "lane": "customer", "col": 0, "type": "external", "label": "Gửi đơn", "sublabel": "bánh + địa chỉ", "width": 108 },
+    { "id": "checkPayment", "lane": "system", "col": 1, "type": "security", "label": "Thanh toán", "sublabel": "authorize", "width": 108 },
+    { "id": "checkStock", "lane": "system", "col": 2, "type": "backend", "label": "Nguyên liệu", "sublabel": "đủ / thiếu", "width": 108 },
+    { "id": "confirmOrder", "lane": "system", "col": 3, "type": "backend", "label": "Xác nhận", "sublabel": "lưu order", "width": 108 },
+    { "id": "makeCake", "lane": "shop", "col": 3, "type": "backend", "label": "Làm bánh", "sublabel": "chuẩn bị + QC", "width": 108 },
+    { "id": "handoff", "lane": "shop", "col": 5, "type": "messagebus", "label": "Giao bánh", "sublabel": "khách nhận", "width": 108 },
+    { "id": "offerChoice", "lane": "exceptions", "col": 2, "type": "security", "label": "Hỏi khách", "sublabel": "đổi / hoàn tiền", "width": 108 },
+    { "id": "changeCake", "lane": "exceptions", "col": 3, "type": "frontend", "label": "Đổi bánh", "sublabel": "chọn mẫu khác", "width": 108 },
+    { "id": "refund", "lane": "exceptions", "col": 4, "type": "database", "label": "Hoàn tiền", "sublabel": "kết thúc", "width": 108 }
+  ],
+  "edges": [
+    { "id": "submitPayment", "from": "submitOrder", "to": "checkPayment", "variant": "emphasis" },
+    { "id": "paymentStock", "from": "checkPayment", "to": "checkStock", "label": "payment ok", "variant": "emphasis" },
+    { "id": "stockConfirm", "from": "checkStock", "to": "confirmOrder", "label": "đủ nguyên liệu", "variant": "emphasis" },
+    { "id": "confirmMake", "from": "confirmOrder", "to": "makeCake", "variant": "emphasis" },
+    { "id": "makeHandoff", "from": "makeCake", "to": "handoff", "variant": "emphasis" },
+    { "id": "stockChoice", "from": "checkStock", "to": "offerChoice", "label": "thiếu nguyên liệu", "variant": "security", "role": "error" },
+    { "id": "choiceChange", "from": "offerChoice", "to": "changeCake", "label": "đổi mẫu", "variant": "default", "role": "branch" },
+    { "id": "changeRetry", "from": "changeCake", "to": "checkStock", "label": "kiểm tra lại", "variant": "dashed", "role": "branch" },
+    { "id": "choiceRefund", "from": "offerChoice", "to": "refund", "label": "hoàn tiền", "variant": "security", "role": "error" }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "Câu hỏi được trả lời",
+      "items": [
+        "Ai xử lý đơn và flow rẽ nhánh ở đâu?",
+        "Main path và nhánh thiếu nguyên liệu được tách rõ"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Trạng thái",
+      "items": [
+        "PROPOSED DESIGN — chưa chạy thử",
+        "Workflow mô tả hành động, không phải durable states"
+      ]
+    }
+  ]
+}
