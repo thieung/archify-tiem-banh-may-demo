@@ -124,7 +124,3 @@ test của ứng dụng; không đánh đồng hai việc này.
 
 - [Archify repository](https://github.com/tt-a1i/archify)
 - [Archify guide](https://tt-a1i.github.io/archify/guide.html)
-
-## Câu Hỏi Chưa Rõ
-
-- Link public tải trọn bộ demo sẽ được thêm sau khi người dùng duyệt và chọn nơi phát hành.
