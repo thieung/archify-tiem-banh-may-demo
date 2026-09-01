@@ -12,7 +12,8 @@ Repository demo phát triển theo từng phần độc lập. Mỗi phần có 
 | 04 | `part/04-dataflow` | `part-04-dataflow-v1.0.0` | Data Flow source, HTML và visual evidence |
 | 05 | `part/05-lifecycle` | `part-05-lifecycle-v1.0.0` | Lifecycle source, HTML và visual evidence |
 | 06 | `part/06-documentation` | `part-06-documentation-v1.0.0` | README, verification harness và release map |
-| Release | `main` | `v1.0.0` | Bản tích hợp đủ sáu phần |
+| 07 | `part/07-repository-hygiene` | `part-07-repository-hygiene-v1.0.0` | Loại Finder metadata khỏi public Git history |
+| Release | `main` | `v1.0.1` | Bản public tích hợp đủ bảy phần |
 
 ## Merge Gate
 
