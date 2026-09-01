@@ -13,7 +13,8 @@ Repository demo phát triển theo từng phần độc lập. Mỗi phần có 
 | 05 | `part/05-lifecycle` | `part-05-lifecycle-v1.0.0` | Lifecycle source, HTML và visual evidence |
 | 06 | `part/06-documentation` | `part-06-documentation-v1.0.0` | README, verification harness và release map |
 | 07 | `part/07-repository-hygiene` | `part-07-repository-hygiene-v1.0.0` | Loại Finder metadata khỏi public Git history |
-| Release | `main` | `v1.0.1` | Bản public tích hợp đủ bảy phần |
+| 08 | `part/08-public-wording` | `part-08-public-wording-v1.0.0` | Xoá placeholder phát hành đã hết hiệu lực |
+| Release | `main` | `v1.0.2` | Bản public tích hợp đủ tám phần |
 
 ## Merge Gate
 
