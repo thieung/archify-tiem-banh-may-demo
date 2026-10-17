@@ -12,9 +12,18 @@ if [[ ! -f "$ARCHIFY_CLI" ]]; then
   exit 1
 fi
 
+# Các JSON dùng schema của Archify 3.1 (ERD, Class, Tree, Timeline, Waterfall và lifecycle schema 3).
+archify_version="$(node -p 'require(process.argv[1]).version' "$ARCHIFY_ROOT/package.json")"
+IFS=. read -r major minor _ <<< "$archify_version"
+if (( major < 3 || (major == 3 && minor < 1) )); then
+  echo "Demo cần Archify >= 3.1.0; đang có $archify_version tại $ARCHIFY_ROOT." >&2
+  echo "Cập nhật skill hoặc truyền ARCHIFY_SKILL_ROOT trỏ tới bản mới." >&2
+  exit 1
+fi
+
 node "$ARCHIFY_CLI" doctor
 
-for mode in architecture workflow sequence dataflow lifecycle; do
+for mode in architecture workflow sequence dataflow lifecycle erd class tree timeline waterfall; do
   node "$ARCHIFY_CLI" validate \
     "$mode" \
     "$DEMO_ROOT/sources/tiem-banh-may.$mode.json" \

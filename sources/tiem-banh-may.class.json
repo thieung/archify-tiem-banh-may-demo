@@ -1,0 +1,201 @@
+{
+  "schema_version": 1,
+  "diagram_type": "class",
+  "meta": {
+    "title": "Tiệm Bánh Mây — Kiểu Trong Module Đặt Bánh",
+    "subtitle": "PROPOSED DESIGN: OrderService phụ thuộc vào interface, không vào nhà cung cấp cụ thể.",
+    "output": "rendered/tiem-banh-may.class.html",
+    "quality_profile": "showcase"
+  },
+  "layout": {
+    "mode": "grid"
+  },
+  "types": [
+    {
+      "id": "orderService",
+      "label": "OrderService",
+      "kind": "class",
+      "sublabel": "Điều phối một đơn bánh",
+      "row": 0,
+      "col": 0,
+      "attributes": [
+        {
+          "name": "payments",
+          "type": "PaymentGateway",
+          "visibility": "private"
+        },
+        {
+          "name": "inventory",
+          "type": "InventoryChecker",
+          "visibility": "private"
+        },
+        {
+          "name": "kitchen",
+          "type": "KitchenPublisher",
+          "visibility": "private"
+        }
+      ],
+      "methods": [
+        {
+          "name": "placeOrder",
+          "parameters": "cart: Cart",
+          "returns": "Order",
+          "visibility": "public"
+        }
+      ]
+    },
+    {
+      "id": "paymentGateway",
+      "label": "PaymentGateway",
+      "kind": "interface",
+      "sublabel": "Hợp đồng authorize thanh toán",
+      "row": 0,
+      "col": 1.5,
+      "methods": [
+        {
+          "name": "authorize",
+          "parameters": "order: Order",
+          "returns": "PaymentResult",
+          "visibility": "public",
+          "abstract": true
+        }
+      ]
+    },
+    {
+      "id": "order",
+      "label": "Order",
+      "kind": "class",
+      "sublabel": "Đơn bánh và trạng thái",
+      "row": 1,
+      "col": 0,
+      "attributes": [
+        {
+          "name": "id",
+          "type": "OrderId",
+          "visibility": "public"
+        },
+        {
+          "name": "status",
+          "type": "OrderStatus",
+          "visibility": "public"
+        }
+      ],
+      "methods": [
+        {
+          "name": "markAuthorized",
+          "parameters": "token: PaymentToken",
+          "returns": "void",
+          "visibility": "public"
+        }
+      ]
+    },
+    {
+      "id": "cardGateway",
+      "label": "CardGateway",
+      "kind": "class",
+      "sublabel": "Thanh toán bằng thẻ",
+      "row": 1,
+      "col": 1,
+      "methods": [
+        {
+          "name": "authorize",
+          "parameters": "order: Order",
+          "returns": "PaymentResult",
+          "visibility": "public"
+        }
+      ]
+    },
+    {
+      "id": "walletGateway",
+      "label": "WalletGateway",
+      "kind": "class",
+      "sublabel": "Thanh toán bằng ví điện tử",
+      "row": 1,
+      "col": 2,
+      "methods": [
+        {
+          "name": "authorize",
+          "parameters": "order: Order",
+          "returns": "PaymentResult",
+          "visibility": "public"
+        }
+      ]
+    },
+    {
+      "id": "inventoryChecker",
+      "label": "InventoryChecker",
+      "kind": "interface",
+      "sublabel": "Kiểm tra nguyên liệu",
+      "row": 2,
+      "col": 0,
+      "methods": [
+        {
+          "name": "hasIngredients",
+          "parameters": "cart: Cart",
+          "returns": "boolean",
+          "visibility": "public",
+          "abstract": true
+        }
+      ]
+    },
+    {
+      "id": "kitchenPublisher",
+      "label": "KitchenPublisher",
+      "kind": "interface",
+      "sublabel": "Gửi ticket xuống bếp",
+      "row": 2,
+      "col": 1.5,
+      "methods": [
+        {
+          "name": "publish",
+          "parameters": "ticket: KitchenTicket",
+          "returns": "void",
+          "visibility": "public",
+          "abstract": true
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "id": "usesPayment",
+      "from": "orderService",
+      "to": "paymentGateway",
+      "kind": "dependency",
+      "label": "authorize qua"
+    },
+    {
+      "id": "createsOrder",
+      "from": "orderService",
+      "to": "order",
+      "kind": "dependency",
+      "label": "tạo"
+    },
+    {
+      "id": "usesInventory",
+      "from": "orderService",
+      "to": "inventoryChecker",
+      "kind": "dependency",
+      "label": "kiểm tra"
+    },
+    {
+      "id": "usesKitchen",
+      "from": "orderService",
+      "to": "kitchenPublisher",
+      "kind": "dependency",
+      "label": "publish"
+    },
+    {
+      "id": "cardImplements",
+      "from": "cardGateway",
+      "to": "paymentGateway",
+      "kind": "realization"
+    },
+    {
+      "id": "walletImplements",
+      "from": "walletGateway",
+      "to": "paymentGateway",
+      "kind": "realization"
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "diagram_type": "tree",
+  "meta": {
+    "title": "Tiệm Bánh Mây — Chia Nhỏ Tính Năng Đặt Bánh",
+    "subtitle": "PROPOSED DESIGN: mỗi phần thuộc đúng một nhánh. Đường nối là quan hệ thuộc về, không phải lời gọi.",
+    "output": "rendered/tiem-banh-may.tree.html",
+    "quality_profile": "showcase"
+  },
+  "nodes": [
+    {
+      "id": "ordering",
+      "label": "Đặt bánh online",
+      "sublabel": "Chia theo việc khách làm"
+    },
+    {
+      "id": "menu",
+      "label": "Chọn món",
+      "parent": "ordering",
+      "sublabel": "Xem và tùy chọn bánh"
+    },
+    {
+      "id": "cart",
+      "label": "Giỏ hàng",
+      "parent": "ordering",
+      "sublabel": "Gom món trước checkout"
+    },
+    {
+      "id": "checkout",
+      "label": "Thanh toán",
+      "parent": "ordering",
+      "sublabel": "Authorize và xử lý lỗi"
+    },
+    {
+      "id": "tracking",
+      "label": "Theo dõi đơn",
+      "parent": "ordering",
+      "sublabel": "Sau khi đặt"
+    },
+    {
+      "id": "browseMenu",
+      "label": "Xem thực đơn",
+      "parent": "menu"
+    },
+    {
+      "id": "customizeCake",
+      "label": "Ghi chú bánh",
+      "parent": "menu"
+    },
+    {
+      "id": "editCart",
+      "label": "Sửa số lượng",
+      "parent": "cart"
+    },
+    {
+      "id": "deliveryInfo",
+      "label": "Thông tin giao",
+      "parent": "cart"
+    },
+    {
+      "id": "authorize",
+      "label": "Authorize",
+      "parent": "checkout"
+    },
+    {
+      "id": "retryPayment",
+      "label": "Thử lại",
+      "parent": "checkout"
+    },
+    {
+      "id": "refund",
+      "label": "Hoàn tiền",
+      "parent": "checkout"
+    },
+    {
+      "id": "orderStatus",
+      "label": "Trạng thái đơn",
+      "parent": "tracking"
+    },
+    {
+      "id": "notify",
+      "label": "Thông báo",
+      "parent": "tracking"
+    }
+  ]
+}

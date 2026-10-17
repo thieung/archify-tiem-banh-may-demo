@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "diagram_type": "waterfall",
+  "meta": {
+    "title": "Tiệm Bánh Mây — Thời Gian Của POST /orders",
+    "subtitle": "Số liệu minh họa, không lấy từ trace thật. Span cha đã bao gồm span con.",
+    "output": "rendered/tiem-banh-may.waterfall.html",
+    "evidence": "illustrative",
+    "unit": "ms",
+    "quality_profile": "showcase"
+  },
+  "spans": [
+    {
+      "id": "request",
+      "name": "POST /orders",
+      "service": "order-api",
+      "start": 0,
+      "end": 900,
+      "detail": "Span cha của mọi bước bên dưới; không cộng dồn với span con."
+    },
+    {
+      "id": "validate",
+      "name": "Kiểm tra payload",
+      "service": "order-api",
+      "start": 0,
+      "duration": 30,
+      "parent": "request"
+    },
+    {
+      "id": "inventory",
+      "name": "Kiểm tra nguyên liệu",
+      "service": "inventory",
+      "start": 30,
+      "duration": 120,
+      "parent": "request"
+    },
+    {
+      "id": "price",
+      "name": "Tính tổng tiền",
+      "service": "order-api",
+      "start": 30,
+      "duration": 60,
+      "parent": "request",
+      "detail": "Chạy song song với kiểm tra nguyên liệu."
+    },
+    {
+      "id": "payment",
+      "name": "Authorize thanh toán",
+      "service": "payment-provider",
+      "start": 150,
+      "duration": 600,
+      "parent": "request"
+    },
+    {
+      "id": "insert",
+      "name": "Ghi order",
+      "service": "order-db",
+      "start": 750,
+      "duration": 90,
+      "parent": "request"
+    },
+    {
+      "id": "ticket",
+      "name": "Publish ticket bếp",
+      "service": "kitchen-queue",
+      "start": 840,
+      "duration": 40,
+      "parent": "request"
+    }
+  ]
+}

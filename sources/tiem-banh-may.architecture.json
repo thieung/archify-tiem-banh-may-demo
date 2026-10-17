@@ -3,41 +3,213 @@
   "diagram_type": "architecture",
   "meta": {
     "title": "Tiệm Bánh Mây — Kiến Trúc Đề Xuất",
+    "output": "rendered/tiem-banh-may.architecture.html",
     "quality_profile": "showcase",
-    "viewBox": [1120, 690],
+    "viewBox": [
+      1120,
+      690
+    ],
     "views": [
       {
         "id": "primary-order-path",
         "label": "Luồng đặt bánh",
-        "focus": ["customer", "webApp", "orderApi", "orderService", "orderDb"],
+        "focus": [
+          "customer",
+          "webApp",
+          "orderApi",
+          "orderService",
+          "orderDb"
+        ],
         "note": "Theo yêu cầu đặt bánh từ khách tới dữ liệu đơn hàng."
       },
       {
         "id": "side-dependencies",
         "label": "Dịch vụ phụ trợ",
-        "focus": ["orderService", "inventory", "payment", "kitchenQueue"],
+        "focus": [
+          "orderService",
+          "inventory",
+          "payment",
+          "kitchenQueue"
+        ],
         "note": "Tách kiểm tra nguyên liệu, thanh toán và bàn giao cho bếp."
       }
     ]
   },
   "components": [
-    { "id": "customer", "type": "external", "label": "Khách hàng", "sublabel": "đặt bánh online", "pos": [30, 290], "size": [125, 64] },
-    { "id": "webApp", "type": "frontend", "label": "Web App", "sublabel": "form đặt bánh", "pos": [220, 290], "size": [130, 64] },
-    { "id": "orderApi", "type": "backend", "label": "Order API", "sublabel": "nhận request", "pos": [415, 290], "size": [130, 64] },
-    { "id": "orderService", "type": "backend", "label": "Order Service", "sublabel": "điều phối đơn", "pos": [610, 290], "size": [138, 64] },
-    { "id": "orderDb", "type": "database", "label": "Order Database", "sublabel": "trạng thái đơn", "pos": [820, 290], "size": [145, 64] },
-    { "id": "payment", "type": "external", "label": "Payment Provider", "sublabel": "authorize payment", "pos": [604, 105], "size": [150, 64] },
-    { "id": "inventory", "type": "backend", "label": "Inventory", "sublabel": "kiểm tra nguyên liệu", "pos": [607, 470], "size": [145, 64] },
-    { "id": "kitchenQueue", "type": "messagebus", "label": "Kitchen Queue", "sublabel": "ticket làm bánh", "pos": [820, 470], "size": [145, 64] }
+    {
+      "id": "customer",
+      "type": "external",
+      "label": "Khách hàng",
+      "sublabel": "đặt bánh online",
+      "pos": [
+        30,
+        290
+      ],
+      "size": [
+        125,
+        64
+      ]
+    },
+    {
+      "id": "webApp",
+      "type": "frontend",
+      "label": "Web App",
+      "sublabel": "form đặt bánh",
+      "pos": [
+        220,
+        290
+      ],
+      "size": [
+        130,
+        64
+      ]
+    },
+    {
+      "id": "orderApi",
+      "type": "backend",
+      "label": "Order API",
+      "sublabel": "nhận request",
+      "pos": [
+        415,
+        290
+      ],
+      "size": [
+        130,
+        64
+      ]
+    },
+    {
+      "id": "orderService",
+      "type": "backend",
+      "label": "Order Service",
+      "sublabel": "điều phối đơn",
+      "pos": [
+        610,
+        290
+      ],
+      "size": [
+        138,
+        64
+      ]
+    },
+    {
+      "id": "orderDb",
+      "type": "database",
+      "label": "Order Database",
+      "sublabel": "trạng thái đơn",
+      "pos": [
+        820,
+        290
+      ],
+      "size": [
+        145,
+        64
+      ]
+    },
+    {
+      "id": "payment",
+      "type": "external",
+      "label": "Payment Provider",
+      "sublabel": "authorize payment",
+      "pos": [
+        604,
+        105
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "inventory",
+      "type": "backend",
+      "label": "Inventory",
+      "sublabel": "kiểm tra nguyên liệu",
+      "pos": [
+        607,
+        470
+      ],
+      "size": [
+        145,
+        64
+      ]
+    },
+    {
+      "id": "kitchenQueue",
+      "type": "messagebus",
+      "label": "Kitchen Queue",
+      "sublabel": "ticket làm bánh",
+      "pos": [
+        820,
+        470
+      ],
+      "size": [
+        145,
+        64
+      ]
+    }
   ],
   "connections": [
-    { "id": "customerWeb", "from": "customer", "to": "webApp", "label": "gửi đơn", "variant": "emphasis" },
-    { "id": "webApi", "from": "webApp", "to": "orderApi", "label": "POST /orders", "variant": "emphasis" },
-    { "id": "apiService", "from": "orderApi", "to": "orderService", "label": "tạo đơn", "variant": "emphasis" },
-    { "id": "serviceDb", "from": "orderService", "to": "orderDb", "label": "lưu order", "variant": "emphasis", "labelDy": -20 },
-    { "id": "serviceInventory", "from": "orderService", "to": "inventory", "label": "kiểm tra tồn", "variant": "default", "fromSide": "bottom", "toSide": "top", "labelAt": [592, 410] },
-    { "id": "servicePayment", "from": "orderService", "to": "payment", "label": "authorize", "variant": "default", "fromSide": "top", "toSide": "bottom" },
-    { "id": "serviceKitchen", "from": "orderService", "to": "kitchenQueue", "label": "publish ticket", "variant": "dashed", "fromSide": "bottom", "toSide": "left" }
+    {
+      "id": "customerWeb",
+      "from": "customer",
+      "to": "webApp",
+      "label": "gửi đơn",
+      "variant": "emphasis"
+    },
+    {
+      "id": "webApi",
+      "from": "webApp",
+      "to": "orderApi",
+      "label": "POST /orders",
+      "variant": "emphasis"
+    },
+    {
+      "id": "apiService",
+      "from": "orderApi",
+      "to": "orderService",
+      "label": "tạo đơn",
+      "variant": "emphasis"
+    },
+    {
+      "id": "serviceDb",
+      "from": "orderService",
+      "to": "orderDb",
+      "label": "lưu order",
+      "variant": "emphasis",
+      "labelDy": -20
+    },
+    {
+      "id": "serviceInventory",
+      "from": "orderService",
+      "to": "inventory",
+      "label": "kiểm tra tồn",
+      "variant": "default",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelAt": [
+        592,
+        410
+      ]
+    },
+    {
+      "id": "servicePayment",
+      "from": "orderService",
+      "to": "payment",
+      "label": "authorize",
+      "variant": "default",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "id": "serviceKitchen",
+      "from": "orderService",
+      "to": "kitchenQueue",
+      "label": "publish ticket",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "left"
+    }
   ],
   "cards": [
     {

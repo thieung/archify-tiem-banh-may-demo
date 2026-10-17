@@ -3,54 +3,205 @@
   "diagram_type": "sequence",
   "meta": {
     "title": "Tiệm Bánh Mây — POST /orders",
+    "output": "rendered/tiem-banh-may.sequence.html",
     "quality_profile": "showcase",
     "column_fit": "spread",
-    "viewBox": [1000, 560],
+    "viewBox": [
+      1000,
+      600
+    ],
     "views": [
       {
         "id": "requestPath",
         "label": "Request thành công",
-        "focus": ["web", "api", "inventory", "payment", "database", "queue"],
+        "focus": [
+          "web",
+          "api",
+          "inventory",
+          "payment",
+          "database",
+          "queue"
+        ],
         "note": "Theo một request từ Web App tới order_id."
       },
       {
         "id": "failureRules",
         "label": "Quy tắc thất bại",
-        "focus": ["api", "inventory", "payment", "database"],
+        "focus": [
+          "api",
+          "inventory",
+          "payment",
+          "database"
+        ],
         "note": "Không ghi order nếu tồn kho hoặc thanh toán thất bại."
       }
     ]
   },
   "participants": [
-    { "id": "web", "type": "frontend", "label": "Web App", "sublabel": "khách đặt bánh" },
-    { "id": "api", "type": "backend", "label": "Order API", "sublabel": "request handler" },
-    { "id": "inventory", "type": "backend", "label": "Inventory", "sublabel": "nguyên liệu" },
-    { "id": "payment", "type": "external", "label": "Payment", "sublabel": "authorize" },
-    { "id": "database", "type": "database", "label": "Order DB", "sublabel": "source of truth" },
-    { "id": "queue", "type": "messagebus", "label": "Kitchen Queue", "sublabel": "async ticket" }
+    {
+      "id": "web",
+      "type": "frontend",
+      "label": "Web App",
+      "sublabel": "khách đặt bánh"
+    },
+    {
+      "id": "api",
+      "type": "backend",
+      "label": "Order API",
+      "sublabel": "request handler"
+    },
+    {
+      "id": "inventory",
+      "type": "backend",
+      "label": "Inventory",
+      "sublabel": "nguyên liệu"
+    },
+    {
+      "id": "payment",
+      "type": "external",
+      "label": "Payment",
+      "sublabel": "authorize"
+    },
+    {
+      "id": "database",
+      "type": "database",
+      "label": "Order DB",
+      "sublabel": "source of truth"
+    },
+    {
+      "id": "queue",
+      "type": "messagebus",
+      "label": "Kitchen Queue",
+      "sublabel": "async ticket"
+    }
   ],
   "segments": [
-    { "from": 145, "to": 255, "label": "Kiểm tra" },
-    { "from": 270, "to": 425, "label": "Tạo đơn" },
-    { "from": 440, "to": 500, "label": "Bàn giao + phản hồi" }
+    {
+      "from": 145,
+      "to": 255,
+      "label": "Kiểm tra"
+    },
+    {
+      "from": 270,
+      "to": 425,
+      "label": "Tạo đơn"
+    },
+    {
+      "from": 440,
+      "to": 500,
+      "label": "Bàn giao + phản hồi"
+    }
   ],
   "messages": [
-    { "id": "createOrder", "from": "web", "to": "api", "y": 170, "label": "POST /orders", "variant": "emphasis" },
-    { "id": "checkInventory", "from": "api", "to": "inventory", "y": 205, "label": "check ingredients", "variant": "default" },
-    { "id": "inventoryOk", "from": "inventory", "to": "api", "y": 240, "label": "available", "variant": "return" },
-    { "id": "authorizePayment", "from": "api", "to": "payment", "y": 295, "label": "authorize payment", "variant": "security" },
-    { "id": "paymentToken", "from": "payment", "to": "api", "y": 330, "label": "payment token", "variant": "return" },
-    { "id": "insertOrder", "from": "api", "to": "database", "y": 375, "label": "insert order", "variant": "emphasis" },
-    { "id": "orderId", "from": "database", "to": "api", "y": 410, "label": "order_id", "variant": "return" },
-    { "id": "publishTicket", "from": "api", "to": "queue", "y": 455, "label": "publish kitchen ticket", "variant": "dashed" },
-    { "id": "createdResponse", "from": "api", "to": "web", "y": 475, "label": "201 + order_id", "variant": "return" }
+    {
+      "id": "createOrder",
+      "from": "web",
+      "to": "api",
+      "y": 170,
+      "label": "POST /orders",
+      "variant": "emphasis"
+    },
+    {
+      "id": "checkInventory",
+      "from": "api",
+      "to": "inventory",
+      "y": 205,
+      "label": "check ingredients",
+      "variant": "default"
+    },
+    {
+      "id": "inventoryOk",
+      "from": "inventory",
+      "to": "api",
+      "y": 240,
+      "label": "available",
+      "variant": "return"
+    },
+    {
+      "id": "authorizePayment",
+      "from": "api",
+      "to": "payment",
+      "y": 295,
+      "label": "authorize payment",
+      "variant": "security"
+    },
+    {
+      "id": "paymentToken",
+      "from": "payment",
+      "to": "api",
+      "y": 330,
+      "label": "payment token",
+      "variant": "return"
+    },
+    {
+      "id": "insertOrder",
+      "from": "api",
+      "to": "database",
+      "y": 375,
+      "label": "insert order",
+      "variant": "emphasis"
+    },
+    {
+      "id": "orderId",
+      "from": "database",
+      "to": "api",
+      "y": 410,
+      "label": "order_id",
+      "variant": "return"
+    },
+    {
+      "id": "publishTicket",
+      "from": "api",
+      "to": "queue",
+      "y": 455,
+      "label": "publish kitchen ticket",
+      "variant": "dashed"
+    },
+    {
+      "id": "createdResponse",
+      "from": "api",
+      "to": "web",
+      "y": 475,
+      "label": "201 + order_id",
+      "variant": "return"
+    }
   ],
   "activations": [
-    { "participant": "web", "from": 165, "to": 490, "type": "frontend" },
-    { "participant": "api", "from": 165, "to": 485, "type": "backend" },
-    { "participant": "inventory", "from": 200, "to": 245, "type": "backend" },
-    { "participant": "payment", "from": 290, "to": 335, "type": "external" },
-    { "participant": "database", "from": 370, "to": 415, "type": "database" },
-    { "participant": "queue", "from": 450, "to": 490, "type": "messagebus" }
+    {
+      "participant": "web",
+      "from": 165,
+      "to": 490,
+      "type": "frontend"
+    },
+    {
+      "participant": "api",
+      "from": 165,
+      "to": 485,
+      "type": "backend"
+    },
+    {
+      "participant": "inventory",
+      "from": 200,
+      "to": 245,
+      "type": "backend"
+    },
+    {
+      "participant": "payment",
+      "from": 290,
+      "to": 335,
+      "type": "external"
+    },
+    {
+      "participant": "database",
+      "from": 370,
+      "to": 415,
+      "type": "database"
+    },
+    {
+      "participant": "queue",
+      "from": 450,
+      "to": 490,
+      "type": "messagebus"
+    }
   ]
 }
