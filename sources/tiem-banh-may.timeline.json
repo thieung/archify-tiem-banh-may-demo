@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "diagram_type": "timeline",
+  "meta": {
+    "title": "Tiệm Bánh Mây — Sự Cố Thanh Toán Buổi Tối",
+    "subtitle": "Số liệu minh họa: sự cố giả định, không lấy từ log thật.",
+    "output": "rendered/tiem-banh-may.timeline.html",
+    "evidence": "illustrative",
+    "timezone": "Asia/Ho_Chi_Minh",
+    "quality_profile": "showcase"
+  },
+  "lanes": [
+    {
+      "id": "release",
+      "label": "Phát hành"
+    },
+    {
+      "id": "monitoring",
+      "label": "Giám sát"
+    },
+    {
+      "id": "response",
+      "label": "On-call"
+    }
+  ],
+  "events": [
+    {
+      "id": "deploy",
+      "at": "2026-10-10T19:30:00+07:00",
+      "title": "Đổi timeout thanh toán",
+      "detail": "Cấu hình mới rút timeout gọi Payment Provider.",
+      "lane": "release",
+      "kind": "change"
+    },
+    {
+      "id": "firstFail",
+      "at": "2026-10-10T19:34:00+07:00",
+      "title": "Authorize đầu tiên lỗi",
+      "detail": "Đơn bắt đầu rơi vào Payment Failed.",
+      "lane": "monitoring",
+      "kind": "default"
+    },
+    {
+      "id": "alert",
+      "at": "2026-10-10T19:46:00+07:00",
+      "title": "Alert tỉ lệ lỗi",
+      "detail": "Tỉ lệ authorize lỗi vượt ngưỡng gọi on-call.",
+      "lane": "monitoring",
+      "kind": "alert"
+    },
+    {
+      "id": "ack",
+      "at": "2026-10-10T19:50:00+07:00",
+      "title": "On-call nhận alert",
+      "detail": "Bắt đầu đối chiếu thay đổi gần nhất.",
+      "lane": "response",
+      "kind": "action"
+    },
+    {
+      "id": "rollback",
+      "at": "2026-10-10T20:02:00+07:00",
+      "title": "Rollback cấu hình",
+      "detail": "Trả timeout về giá trị cũ.",
+      "lane": "release",
+      "kind": "action"
+    },
+    {
+      "id": "recovered",
+      "at": "2026-10-10T20:08:00+07:00",
+      "title": "Tỉ lệ lỗi về bình thường",
+      "detail": "Khách retry thanh toán thành công.",
+      "lane": "monitoring",
+      "kind": "recovery"
+    },
+    {
+      "id": "closed",
+      "at": "2026-10-10T20:30:00+07:00",
+      "title": "Đóng sự cố",
+      "detail": "Ghi lại khoảng 12 phút từ lỗi đầu tới alert.",
+      "lane": "response",
+      "kind": "action"
+    }
+  ]
+}
