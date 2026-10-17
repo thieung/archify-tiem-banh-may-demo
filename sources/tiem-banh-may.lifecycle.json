@@ -1,52 +1,148 @@
 {
-  "schema_version": 1,
+  "schema_version": 3,
   "diagram_type": "lifecycle",
   "meta": {
     "title": "Tiệm Bánh Mây — Vòng Đời Order",
+    "output": "rendered/tiem-banh-may.lifecycle.html",
     "quality_profile": "showcase",
-    "viewBox": [1000, 600],
     "views": [
       {
         "id": "mainLifecycle",
         "label": "Vòng đời chính",
-        "focus": ["draft", "awaitingPayment", "inFulfillment", "completed"],
+        "focus": [
+          "draft",
+          "awaitingPayment",
+          "inFulfillment",
+          "completed"
+        ],
         "note": "Theo order từ bản nháp tới hoàn tất."
       },
       {
         "id": "paymentRecovery",
         "label": "Retry thanh toán",
-        "focus": ["awaitingPayment", "paymentFailed"],
+        "focus": [
+          "awaitingPayment",
+          "paymentFailed"
+        ],
         "note": "Tách lỗi có thể retry khỏi hủy terminal."
       },
       {
         "id": "refundExit",
         "label": "Hoàn tiền",
-        "focus": ["inFulfillment", "refundPending", "refunded"],
+        "focus": [
+          "inFulfillment",
+          "refundPending",
+          "refunded"
+        ],
         "note": "Order đã charge phải qua refund trước khi kết thúc."
       }
     ]
   },
-  "lanes": [
-    { "id": "main", "label": "Trạng thái chính" },
-    { "id": "recovery", "label": "Chờ + khôi phục" },
-    { "id": "terminal", "label": "Kết thúc khác" }
+  "mainPath": [
+    "draft",
+    "awaitingPayment",
+    "inFulfillment",
+    "completed"
   ],
   "states": [
-    { "id": "draft", "type": "start", "label": "Draft", "sublabel": "khách đang chọn", "lane": "main", "col": 0, "step": "01" },
-    { "id": "awaitingPayment", "type": "waiting", "label": "Awaiting Payment", "sublabel": "chưa authorize", "lane": "main", "col": 2, "step": "02" },
-    { "id": "inFulfillment", "type": "active", "label": "In Fulfillment", "sublabel": "làm + giao bánh", "lane": "main", "col": 3, "step": "03" },
-    { "id": "completed", "type": "success", "label": "Completed", "sublabel": "đã giao", "lane": "main", "col": 4, "step": "04" },
-    { "id": "refundPending", "type": "waiting", "label": "Refund Pending", "sublabel": "đã charge", "lane": "recovery", "col": 1, "tag": "pause" },
-    { "id": "paymentFailed", "type": "failure", "label": "Payment Failed", "sublabel": "có thể thử lại", "lane": "recovery", "col": 0, "tag": "retryable" },
-    { "id": "refunded", "type": "success", "label": "Refunded", "sublabel": "đã hoàn tiền", "lane": "terminal", "col": 1, "yOffset": -80, "tag": "terminal" }
+    {
+      "id": "draft",
+      "type": "start",
+      "label": "Draft",
+      "sublabel": "khách đang chọn",
+      "step": "01"
+    },
+    {
+      "id": "awaitingPayment",
+      "type": "waiting",
+      "label": "Awaiting Payment",
+      "sublabel": "chưa authorize",
+      "step": "02"
+    },
+    {
+      "id": "inFulfillment",
+      "type": "active",
+      "label": "In Fulfillment",
+      "sublabel": "làm + giao bánh",
+      "step": "03"
+    },
+    {
+      "id": "completed",
+      "type": "success",
+      "label": "Completed",
+      "sublabel": "đã giao",
+      "step": "04"
+    },
+    {
+      "id": "refundPending",
+      "type": "waiting",
+      "label": "Refund Pending",
+      "sublabel": "đã charge",
+      "tag": "pause"
+    },
+    {
+      "id": "paymentFailed",
+      "type": "failure",
+      "label": "Payment Failed",
+      "sublabel": "có thể thử lại",
+      "tag": "retryable"
+    },
+    {
+      "id": "refunded",
+      "type": "success",
+      "label": "Refunded",
+      "sublabel": "đã hoàn tiền",
+      "tag": "terminal"
+    }
   ],
   "transitions": [
-    { "id": "draftCheckout", "from": "draft", "to": "awaitingPayment", "label": "checkout", "labelDy": 55 },
-    { "id": "paymentAuthorized", "from": "awaitingPayment", "to": "inFulfillment", "label": "authorized", "variant": "emphasis", "labelDy": 55 },
-    { "id": "deliveryCompleted", "from": "inFulfillment", "to": "completed", "label": "delivered", "variant": "emphasis", "labelDy": 55 },
-    { "id": "paymentRejected", "from": "awaitingPayment", "to": "paymentFailed", "label": "rejected", "variant": "security", "fromSide": "bottom", "toSide": "top", "route": "straight", "labelAt": [450, 230] },
-    { "id": "retryPayment", "from": "paymentFailed", "to": "awaitingPayment", "label": "retry", "variant": "emphasis", "fromSide": "left", "toSide": "left", "route": "left-channel", "channelX": 210, "labelAt": [205, 270] },
-    { "id": "cancelAfterCharge", "from": "inFulfillment", "to": "refundPending", "label": "cancel", "variant": "security", "fromSide": "bottom", "toSide": "top", "route": "straight", "labelAt": [605, 230] },
-    { "id": "refundSucceeded", "from": "refundPending", "to": "refunded", "label": "refunded", "variant": "emphasis", "fromSide": "bottom", "toSide": "top", "route": "straight", "labelAt": [605, 442] }
+    {
+      "id": "draftCheckout",
+      "from": "draft",
+      "to": "awaitingPayment",
+      "label": "checkout"
+    },
+    {
+      "id": "paymentAuthorized",
+      "from": "awaitingPayment",
+      "to": "inFulfillment",
+      "label": "authorized",
+      "variant": "emphasis"
+    },
+    {
+      "id": "deliveryCompleted",
+      "from": "inFulfillment",
+      "to": "completed",
+      "label": "delivered",
+      "variant": "emphasis"
+    },
+    {
+      "id": "paymentRejected",
+      "from": "awaitingPayment",
+      "to": "paymentFailed",
+      "label": "rejected",
+      "variant": "security"
+    },
+    {
+      "id": "retryPayment",
+      "from": "paymentFailed",
+      "to": "awaitingPayment",
+      "label": "retry",
+      "variant": "emphasis"
+    },
+    {
+      "id": "cancelAfterCharge",
+      "from": "inFulfillment",
+      "to": "refundPending",
+      "label": "cancel",
+      "variant": "security"
+    },
+    {
+      "id": "refundSucceeded",
+      "from": "refundPending",
+      "to": "refunded",
+      "label": "refunded",
+      "variant": "emphasis"
+    }
   ]
 }
