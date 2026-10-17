@@ -1,6 +1,10 @@
-# Raw visual receipts contain machine-local artifact and browser paths.
+# Raw visual, finalize, browser-check and delivery receipts contain machine-local artifact and browser paths.
 # Regenerate them locally when reviewing a release; do not publish them.
 rendered/*.visual-check.json
+rendered/*.finalize.json
+rendered/*.finalize-summary.json
+rendered/*.browser-check.json
+rendered/*.delivery.json
 
 # Finder metadata is local workstation state.
 .DS_Store

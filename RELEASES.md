@@ -14,6 +14,7 @@ Repository demo phát triển theo từng phần độc lập. Mỗi phần có 
 | 06 | `part/06-documentation` | `part-06-documentation-v1.0.0` | README, verification harness và release map |
 | 07 | `part/07-repository-hygiene` | `part-07-repository-hygiene-v1.0.0` | Loại Finder metadata khỏi public Git history |
 | 08 | `part/08-public-wording` | `part-08-public-wording-v1.0.0` | Xoá placeholder phát hành đã hết hiệu lực |
+| 09 | `part/09-archify-3-1-diagrams` | `part-09-archify-3-1-diagrams-v1.0.0` | ERD, Class, Tree, Timeline, Waterfall với Archify 3.1.0 |
 | Release | `main` | `v1.0.2` | Bản public tích hợp đủ tám phần |
 
 ## Merge Gate
